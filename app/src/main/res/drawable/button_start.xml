@@ -1,0 +1,25 @@
+<!-- drawable/button_star.xml -->
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:width="227.18dp"
+    android:height="66.75dp"
+    android:viewportWidth="227.18"
+    android:viewportHeight="66.75"
+    >
+
+    <group>
+
+        <clip-path
+            android:pathData="M0 0H227.18V66.7516H0V0Z"
+            tools:ignore="VectorRaster" />
+
+        <path
+            android:pathData="M0 0V66.7516H227.18V0"
+            android:fillColor="#FFFFFF"
+            />
+
+    </group>
+
+</vector>

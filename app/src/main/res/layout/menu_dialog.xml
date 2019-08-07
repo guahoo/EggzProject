@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/eggz_background"
+        android:layout_width="500dp"
+        android:layout_height="400dp"
+        android:layout_alignParentTop="true"
+
+
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_white_eggz_menu_background_28" />
+
+    <Button
+        android:id="@+id/bell_on_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        android:layout_alignStart="@+id/languague_button"
+        android:layout_alignBottom="@+id/languague_yellow_background"
+        android:layout_marginTop="9dp"
+        android:background="@drawable/ic_on_ye"
+        app:layout_constraintStart_toStartOf="@+id/languague_button"
+        app:layout_constraintTop_toBottomOf="@+id/languague_button" />
+
+    <Button
+        android:id="@+id/bell_off_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        android:layout_alignEnd="@+id/resipes_button"
+        android:layout_alignBottom="@+id/languague_yellow_background"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="-120dp"
+        android:background="@drawable/ic_off_black"
+        app:layout_constraintEnd_toEndOf="@+id/languague_button"
+        app:layout_constraintTop_toBottomOf="@+id/languague_button" />
+
+    <Button
+        android:id="@+id/crossButton_menu_dialog"
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:layout_alignTop="@+id/eggz_background"
+        android:layout_alignEnd="@+id/eggz_background"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/ic_exit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/resipes_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="108dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/ic_recept"
+        app:layout_constraintEnd_toEndOf="@+id/languague_button"
+        app:layout_constraintStart_toStartOf="@+id/languague_button"
+        app:layout_constraintTop_toTopOf="@+id/eggz_background" />
+
+    <Button
+        android:id="@+id/languague_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/resipes_button"
+        android:layout_centerHorizontal="true"
+
+
+        android:layout_marginTop="9dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/ic_language"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/resipes_button" />
+
+    <Button
+        android:id="@+id/english_button"
+        android:layout_width="101dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="9dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/ic_english_black"
+        android:scaleType="fitCenter"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/languague_button"
+        app:layout_constraintStart_toStartOf="@+id/languague_button"
+        app:layout_constraintTop_toBottomOf="@+id/languague_button" />
+
+    <Button
+        android:id="@+id/russian_button"
+        android:layout_width="123dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="9dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/ic_russian_yellow"
+        android:scaleType="fitCenter"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/languague_button"
+        app:layout_constraintStart_toStartOf="@+id/languague_button"
+        app:layout_constraintTop_toBottomOf="@+id/english_button" />
+
+    <ImageView
+        android:id="@+id/languague_yellow_background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/languague_button"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/languague_button"
+        app:layout_constraintStart_toStartOf="@+id/languague_button"
+        app:layout_constraintTop_toTopOf="@+id/languague_button"
+        app:srcCompat="@drawable/ic_rectangle" />
+
+    <ImageView
+        android:id="@+id/menu_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/eggz_background"
+        app:srcCompat="@drawable/ic_text_menu" />
+
+
+</android.support.constraint.ConstraintLayout>
