@@ -93,6 +93,6 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="205dp"
         android:layout_marginEnd="178dp"
-        android:text="hellowKitty" />
+        android:text="testingGitSucsesful" />
 
 </RelativeLayout>
