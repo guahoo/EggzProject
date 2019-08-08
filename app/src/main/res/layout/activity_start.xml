@@ -85,4 +85,14 @@
         android:layout_marginTop="53dp"
         app:srcCompat="@drawable/ic_logo_eggz_ru" />
 
+    <TextView
+        android:id="@+id/hellowKitty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="205dp"
+        android:layout_marginEnd="178dp"
+        android:text="hellowKitty" />
+
 </RelativeLayout>
