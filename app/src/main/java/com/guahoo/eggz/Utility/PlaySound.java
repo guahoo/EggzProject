@@ -18,6 +18,12 @@ public class PlaySound {
         if (Objects.equals ( sharedPreferences.getString ( "soundOff", null ), "on" )) {
             final MediaPlayer mp = MediaPlayer.create ( context,resid );
             mp.start ();
+            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mp.stop();
+                }
+            });
         }
     }
 }
