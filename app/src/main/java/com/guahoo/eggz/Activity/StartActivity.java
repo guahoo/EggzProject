@@ -22,6 +22,7 @@ import android.widget.NumberPicker;
 import com.guahoo.eggz.Utility.Dialog_menu;
 import com.guahoo.eggz.Utility.PlaySound;
 import com.guahoo.eggz.R;
+import com.guahoo.eggz.Utility.SoundPoolHelper;
 
 import java.util.Objects;
 
@@ -40,6 +41,9 @@ public class StartActivity extends AppCompatActivity implements NumberPicker.OnV
     Button english_Languegue_Button;
     ImageView yellow_Langugue_Background;
     SharedPreferences sharedPreferences;
+    SoundPoolHelper mSoundPoolHelper;
+    int mSoundLessId;
+
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
@@ -70,7 +74,8 @@ public class StartActivity extends AppCompatActivity implements NumberPicker.OnV
         english_Languegue_Button = findViewById ( R.id.english_button );
         languague_menu_is_active = false;
         sharedPreferences = getApplicationContext ().getSharedPreferences ( "soundOff", MODE_PRIVATE );
-
+        mSoundPoolHelper = new SoundPoolHelper(1, this);
+        mSoundLessId = mSoundPoolHelper.load(this, R.raw.click, 1);
         setEnLanguage ();
 
 
@@ -147,8 +152,8 @@ public class StartActivity extends AppCompatActivity implements NumberPicker.OnV
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                PlaySound playSound = new PlaySound ();
-                playSound.playSound ( sharedPreferences, getApplicationContext (), R.raw.click );
+                playSound(mSoundLessId);
+
             }
         } );
 
@@ -156,8 +161,8 @@ public class StartActivity extends AppCompatActivity implements NumberPicker.OnV
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                PlaySound playSound = new PlaySound ();
-                playSound.playSound ( sharedPreferences, getApplicationContext (), R.raw.click );
+                playSound(mSoundLessId);
+
             }
         } );
 
@@ -214,14 +219,23 @@ public class StartActivity extends AppCompatActivity implements NumberPicker.OnV
     }
 
     public void setEnLanguage() {
+        if(sharedPreferences.getAll().isEmpty()){
+            SharedPreferences.Editor editor= sharedPreferences.edit();
+            editor.putString("languague","EN");
+            editor.apply();
+        }
         if (sharedPreferences.getString ( "languague", null ).equals ( "EN" )) {
             button_custom_picker_show.setBackgroundResource ( R.drawable.ic_button_custom_timer_picker_show_en );
             softEggzButton.setBackgroundResource ( R.drawable.ic_button_soft_en );
             hardEgggzButton.setBackgroundResource ( R.drawable.ic_button_medium_en );
             mediumEggzButton.setBackgroundResource ( R.drawable.ic_button_hard_en );
 
-
-
+        }
+    }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void playSound(int soundId) {
+        if (Objects.equals(sharedPreferences.getString("soundOff", null), "on")) {
+            mSoundPoolHelper.play(soundId);
         }
     }
 }
