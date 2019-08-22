@@ -2,7 +2,10 @@ package com.guahoo.eggz.Utility;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +20,8 @@ import com.guahoo.eggz.R;
 import com.guahoo.eggz.Utility.ResourcesModel;
 import com.guahoo.eggz.Utility.SimplePagerAdapter;
 
+import java.util.Objects;
+
 
 public class RecipeActivity extends AppCompatActivity {
 
@@ -25,6 +30,7 @@ public class RecipeActivity extends AppCompatActivity {
     Button finishButton;
     private  final String TAG = "";
     Button crossButton;
+    SharedPreferences sharedPreferences;
 
     public int getCurrentPage() {
         return currentPage;
@@ -32,6 +38,7 @@ public class RecipeActivity extends AppCompatActivity {
 
     private int currentPage;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +51,16 @@ public class RecipeActivity extends AppCompatActivity {
         }
         super.onCreate ( savedInstanceState );
         setContentView ( R.layout.activity_recipe );
+        sharedPreferences = getApplicationContext().getSharedPreferences("soundOff", MODE_PRIVATE);
 
 
         simplePagerAdapter = new SimplePagerAdapter ( this );
         crossButton = findViewById ( R.id.backButton );
         finishButton = findViewById ( R.id.startButton );
+
+        if (Objects.equals(sharedPreferences.getString("languague", null), "EN")) {
+            finishButton.setBackgroundResource(R.drawable.ic_button_start_recipe_en);
+        }
         finishButton.setVisibility ( View.INVISIBLE );
 
 

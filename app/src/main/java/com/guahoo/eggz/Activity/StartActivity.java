@@ -218,17 +218,20 @@ public class StartActivity extends AppCompatActivity implements NumberPicker.OnV
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void setEnLanguage() {
         if(sharedPreferences.getAll().isEmpty()){
             SharedPreferences.Editor editor= sharedPreferences.edit();
             editor.putString("languague","EN");
+            editor.putString("soundOff","on");
             editor.apply();
         }
-        if (sharedPreferences.getString ( "languague", null ).equals ( "EN" )) {
+        if (Objects.equals(sharedPreferences.getString("languague", null), "EN")) {
             button_custom_picker_show.setBackgroundResource ( R.drawable.ic_button_custom_timer_picker_show_en );
             softEggzButton.setBackgroundResource ( R.drawable.ic_button_soft_en );
-            hardEgggzButton.setBackgroundResource ( R.drawable.ic_button_medium_en );
-            mediumEggzButton.setBackgroundResource ( R.drawable.ic_button_hard_en );
+            hardEgggzButton.setBackgroundResource ( R.drawable.ic_button_hard_en );
+            mediumEggzButton.setBackgroundResource ( R.drawable.ic_button_medium_en );
+            titleView.setImageResource(R.drawable.ic_text_title_en);
 
         }
     }

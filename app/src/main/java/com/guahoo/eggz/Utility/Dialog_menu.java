@@ -2,6 +2,7 @@ package com.guahoo.eggz.Utility;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
@@ -24,13 +25,19 @@ import static android.content.Context.MODE_PRIVATE;
 public  class Dialog_menu {
     final Button buttonsoundOn;
     final Button buttonsoundOff;
-    final Button languague_Button;
+
     final Button russian_Languegue_Button;
     final Button english_Languegue_Button;
     final ImageView yellow_Langugue_Background;
      SharedPreferences sharedPreferences;
     boolean languague_menu_is_active;
     Context context;
+     ImageView menuTitle;
+
+     Button recipeButton;
+    Button languague_Button;
+
+
     SharedPreferences PREFERENSES;
 
     public Dialog_menu(Button buttonsoundOn, Button buttonsoundOff,
@@ -67,12 +74,12 @@ public  class Dialog_menu {
 
         final Button buttonsoundOn;
         final Button buttonsoundOff;
-        final Button languague_Button;
+
         final Button russian_Languegue_Button;
         final Button english_Languegue_Button;
         final ImageView yellow_Langugue_Background;
         final SharedPreferences sharedPreferences;
-        ImageView menuTitle;
+
 
         buttonsoundOff = d.findViewById ( R.id.bell_off_button );
         buttonsoundOn = d.findViewById ( R.id.bell_on_button );
@@ -81,7 +88,7 @@ public  class Dialog_menu {
         russian_Languegue_Button= d.findViewById ( R.id.russian_button );
         english_Languegue_Button = d.findViewById ( R.id.english_button );
         menuTitle = d.findViewById ( R.id.menu_title );
-        Button recipeButton = d.findViewById ( R.id.resipes_button );
+        recipeButton = d.findViewById ( R.id.resipes_button );
         languague_menu_is_active=false;
         sharedPreferences = context.getSharedPreferences ( "soundOff",MODE_PRIVATE );
         final SharedPreferences.Editor editor = sharedPreferences.edit ();
@@ -119,6 +126,7 @@ public  class Dialog_menu {
                     if (Objects.requireNonNull ( sharedPreferences.getString ( "languague", "EN" ) ).equals ( "EN" )){
                         english_Languegue_Button.setBackgroundResource ( R.drawable.ic_english_black);
                         russian_Languegue_Button.setBackgroundResource ( R.drawable.ic_russian_yellow );
+
                     } else {
                         english_Languegue_Button.setBackgroundResource ( R.drawable.ic_english_yellow );
                         russian_Languegue_Button.setBackgroundResource ( R.drawable.ic_russian_black );
@@ -148,6 +156,7 @@ public  class Dialog_menu {
                 russian_Languegue_Button.setBackgroundResource ( R.drawable.ic_russian_black );
                 editor.putString ( "languague", "RU" );
                 editor.apply ();
+                setRuLanguage();
 
 
             }
@@ -160,6 +169,7 @@ public  class Dialog_menu {
                 russian_Languegue_Button.setBackgroundResource ( R.drawable.ic_russian_yellow);
                 editor.putString ( "languague", "EN" );
                 editor.apply ();
+                setEnLanguage();
 
 
             }
@@ -207,12 +217,31 @@ public  class Dialog_menu {
             }
         } ) ;
 
+        d.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                context.startActivity(new Intent(context,StartActivity.class));
+            }
+        });
+
 
 
     }
     public void setEnLanguage() {
-
-
+        if (sharedPreferences.getString ( "languague", null ).equals ( "EN" )) {
+            recipeButton.setBackgroundResource(R.drawable.ic_button_resipe_en);
+            languague_Button.setBackgroundResource(R.drawable.ic_button_language_en);
+            menuTitle.setImageResource(R.drawable.ic_text_menu_en);
+        }
     }
+
+    public void setRuLanguage() {
+        if (sharedPreferences.getString ( "languague", null ).equals ( "RU" )) {
+            recipeButton.setBackgroundResource(R.drawable.ic_recept);
+            languague_Button.setBackgroundResource(R.drawable.ic_language);
+            menuTitle.setImageResource(R.drawable.ic_text_menu);
+        }
+    }
+
 
 }

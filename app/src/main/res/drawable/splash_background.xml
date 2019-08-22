@@ -7,7 +7,7 @@
 
     <item>
         <bitmap
-            android:src="@drawable/eggz_beginning"
+            android:src="@drawable/splash_back"
             android:mipMap="true"
            />
     </item>

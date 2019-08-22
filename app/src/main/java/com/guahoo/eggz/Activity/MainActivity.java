@@ -221,16 +221,23 @@ public class MainActivity extends AppCompatActivity {
             if (extras.getString ( "eggzType" ).equals ( "hard" )) {
                 eggzTitle.setImageResource ( R.drawable.ic_text_hard );
                 eggzFinal.setImageResource ( R.drawable.ic_eggz_final_hard );
+                setLanguage(eggzTitle,eggzFinal,R.drawable.ic_text_hard_en,R.drawable.ic_eggz_final_hard_en);
+
                 setMtimeleftminutes ( 480000 );
                 START_TIME_IN_MILLIS = 480000;
             } else if (extras.getString ( "eggzType" ).equals ( "medium" )) {
                 eggzTitle.setImageResource ( R.drawable.ic_text_medium );
                 eggzFinal.setImageResource ( R.drawable.ic_eggz_final_medium );
+                setLanguage(eggzTitle,eggzFinal,R.drawable.ic_text_medium_en,R.drawable.ic_eggz_final_medium_en);
+
                 setMtimeleftminutes ( 300000 );
                 START_TIME_IN_MILLIS = 300000;
             } else if (extras.getString ( "eggzType" ).equals ( "soft" )) {
                 eggzTitle.setImageResource ( R.drawable.ic_text_soft );
                 eggzFinal.setImageResource ( R.drawable.ic_eggz_final_soft );
+                setLanguage(eggzTitle,eggzFinal,R.drawable.ic_text_soft_en,R.drawable.ic_eggz_final_soft_en);
+
+
                 setMtimeleftminutes ( 180000 );
                 START_TIME_IN_MILLIS = 180000;
             }
@@ -252,12 +259,19 @@ public class MainActivity extends AppCompatActivity {
             if (customeggzBoilTime < 300000) {
                 eggzTitle.setImageResource ( R.drawable.ic_text_soft );
                 eggzFinal.setImageResource ( R.drawable.ic_eggz_final_soft );
+                setLanguage(eggzTitle,eggzFinal,R.drawable.ic_text_soft_en,R.drawable.ic_eggz_final_soft_en);
             } else if (customeggzBoilTime >= 300000 & customeggzBoilTime < 480000) {
+
                 eggzTitle.setImageResource ( R.drawable.ic_text_medium );
                 eggzFinal.setImageResource ( R.drawable.ic_eggz_final_medium );
+                setLanguage(eggzTitle,eggzFinal,R.drawable.ic_text_medium_en,R.drawable.ic_eggz_final_medium_en);
             } else if (customeggzBoilTime >= 480000) {
+
+
+
                 eggzTitle.setImageResource ( R.drawable.ic_text_hard );
                 eggzFinal.setImageResource ( R.drawable.ic_eggz_final_hard );
+                setLanguage(eggzTitle,eggzFinal,R.drawable.ic_text_hard_en,R.drawable.ic_eggz_final_hard_en);
             }
         }
     }
@@ -269,14 +283,6 @@ public class MainActivity extends AppCompatActivity {
             startButton.setBackgroundResource ( R.drawable.button_start_selector_en );
             timerView.setImageResource ( R.drawable.ic_text_timer_en );
 
-//            if (startButton.getBackground ()
-//            ==getResources ().getDrawable ( R.drawable.ic_start)){
-//                startButton.setBackgroundResource ( R.drawable.button_start_selector_en );
-//            } else if (startButton.getBackground ().getConstantState ()
-//                    ==getResources ().getDrawable ( R.drawable.buttonpauseselector ).getConstantState ()){
-//                startButton.setBackgroundResource ( R.drawable.button_pause_selector_en);
-//            }
-
 
 
 
@@ -284,14 +290,25 @@ public class MainActivity extends AppCompatActivity {
             if (eggzTitle.getDrawable ().getConstantState ()
                     == getResources ().getDrawable ( R.drawable.ic_text_soft ).getConstantState ()) {
                 eggzTitle.setImageResource ( R.drawable.ic_text_soft_en );
+                eggzFinal.setImageResource(R.drawable.ic_eggz_final_soft_en);
             } else if (eggzTitle.getDrawable ().getConstantState ()
                     == getResources ().getDrawable ( R.drawable.ic_text_medium ).getConstantState ()) {
                 eggzTitle.setImageResource ( R.drawable.ic_text_medium_en );
+                eggzFinal.setImageResource(R.drawable.ic_eggz_final_medium_en);
             } else if (eggzTitle.getDrawable ().getConstantState ()
                     == getResources ().getDrawable ( R.drawable.ic_text_hard ).getConstantState ()) {
                 eggzTitle.setImageResource ( R.drawable.ic_text_hard_en );
+                eggzFinal.setImageResource(R.drawable.ic_eggz_final_hard_en);
 
             }
+        }
+
+
+    }
+    void setLanguage(ImageView imageViewTitle,ImageView imageViewFinal, int t,int f){
+        if (sharedPreferences.getString ( "languague", null ).equals ( "EN" )) {
+            imageViewTitle.setImageResource(t);
+            imageViewFinal.setImageResource(f);
         }
 
 
