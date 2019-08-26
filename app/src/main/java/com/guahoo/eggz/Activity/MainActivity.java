@@ -22,6 +22,7 @@ import com.guahoo.eggz.Utility.PlaySound;
 import com.guahoo.eggz.R;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getApplicationContext ().getSharedPreferences ( "soundOff", MODE_PRIVATE );
 
 
+
         stateSettings ();
         setEnLanguage ();
 
@@ -107,12 +109,17 @@ public class MainActivity extends AppCompatActivity {
 
 
         startButton.setOnClickListener ( new View.OnClickListener () {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
                 if (mTimerRunning) {
                     pauseTimer ();
                 } else {
                     startTimer ();
+                    startButton.setBackgroundResource ( R.drawable.buttonpauseselector );
+                    if (Objects.equals(sharedPreferences.getString("languague", null), "EN")) {
+                        startButton.setBackgroundResource ( R.drawable.button_pause_selector_en );
+                    }
                 }
 
             }
@@ -135,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void startTimer() {
+    protected void startTimer() {
         timer = new CountDownTimer ( mtimeleftminutes, 1000 ) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -150,9 +157,7 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onFinish() {
-                if (sharedPreferences.getString ( "languague", null ).equals ( "EN" )) {
 
-                }
 
                 timeView.setVisibility ( View.INVISIBLE );
                 mProgress.setVisibility ( View.INVISIBLE );
@@ -171,10 +176,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }.start ();
 
-        startButton.setBackgroundResource ( R.drawable.buttonpauseselector );
-        if (sharedPreferences.getString ( "languague", null ).equals ( "EN" )) {
-            startButton.setBackgroundResource ( R.drawable.button_pause_selector_en );
-        }
+
         mTimerRunning = true;
         resetButton.setEnabled ( true );
     }
@@ -312,6 +314,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        timer.cancel ();
+        mTimerRunning = false;
+        Intent intent = new Intent(this,StartActivity.class);
+        startActivity(intent);
     }
 }
 
