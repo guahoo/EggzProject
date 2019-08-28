@@ -15,7 +15,7 @@ public enum ResourcesModel {
 
     private int mTitleResourceId;
     private int mLayoutResourceId;
-    private String mResourseTitle;
+
 
     ResourcesModel(int titleResId, int layoutResId) {
         mTitleResourceId = titleResId;

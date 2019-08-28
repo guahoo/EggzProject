@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.guahoo.eggz.Utility.InitString;
 import com.guahoo.eggz.Utility.PlaySound;
 import com.guahoo.eggz.R;
 
@@ -41,9 +42,9 @@ public class MainActivity extends AppCompatActivity {
     Button resetButton;
     ImageView yellowCircle, timerView;
     SharedPreferences sharedPreferences;
+    InitString initString;
 
-
-
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -74,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
 
         vibrator = (Vibrator) getSystemService ( Context.VIBRATOR_SERVICE );
         sharedPreferences = getApplicationContext ().getSharedPreferences ( "soundOff", MODE_PRIVATE );
+        initString = new InitString();
+
+
 
 
 
@@ -117,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     startTimer ();
                     startButton.setBackgroundResource ( R.drawable.buttonpauseselector );
-                    if (Objects.equals(sharedPreferences.getString("languague", null), "EN")) {
+                    if (Objects.equals(sharedPreferences.getString(initString.getLanguage(), null), "EN")) {
                         startButton.setBackgroundResource ( R.drawable.button_pause_selector_en );
                     }
                 }
@@ -181,22 +185,24 @@ public class MainActivity extends AppCompatActivity {
         resetButton.setEnabled ( true );
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void pauseTimer() {
         timer.cancel ();
         mTimerRunning = false;
         startButton.setBackgroundResource ( R.drawable.buttonresumeselector );
-        if (sharedPreferences.getString ( "languague", null ).equals ( "EN" )) {
+        if (Objects.equals(sharedPreferences.getString(initString.getLanguage(), null), "EN")) {
             startButton.setBackgroundResource ( R.drawable.button_resume_selector_en );
         }
 
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void resetTimer() {
         mtimeleftminutes = START_TIME_IN_MILLIS;
         updateTimeView ();
         startButton.setBackgroundResource ( R.drawable.buttonstartselector );
-        if (sharedPreferences.getString ( "languague", null ).equals ( "EN" )) {
+        if (Objects.equals(sharedPreferences.getString(initString.getLanguage(), null), "EN")) {
             startButton.setBackgroundResource ( R.drawable.button_start_selector_en );
         }
 
@@ -215,33 +221,38 @@ public class MainActivity extends AppCompatActivity {
      * setTimerMinutes
      **/
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void stateSettings() {
         Intent intent = getIntent ();
-        if (intent.hasExtra ( "eggzType" )) {
+        if (intent.hasExtra ( initString.getEggsType() )) {
             Bundle extras = getIntent ().getExtras ();
             assert extras != null;
-            if (extras.getString ( "eggzType" ).equals ( "hard" )) {
-                eggzTitle.setImageResource ( R.drawable.ic_text_hard );
-                eggzFinal.setImageResource ( R.drawable.ic_eggz_final_hard );
-                setLanguage(eggzTitle,eggzFinal,R.drawable.ic_text_hard_en,R.drawable.ic_eggz_final_hard_en);
+            switch (Objects.requireNonNull(extras.getString(initString.getEggsType()))) {
+                case "hard":
+                    eggzTitle.setImageResource(R.drawable.ic_text_hard);
+                    eggzFinal.setImageResource(R.drawable.ic_eggz_final_hard);
+                    setLanguage(eggzTitle, eggzFinal, R.drawable.ic_text_hard_en, R.drawable.ic_eggz_final_hard_en);
 
-                setMtimeleftminutes ( 480000 );
-                START_TIME_IN_MILLIS = 480000;
-            } else if (extras.getString ( "eggzType" ).equals ( "medium" )) {
-                eggzTitle.setImageResource ( R.drawable.ic_text_medium );
-                eggzFinal.setImageResource ( R.drawable.ic_eggz_final_medium );
-                setLanguage(eggzTitle,eggzFinal,R.drawable.ic_text_medium_en,R.drawable.ic_eggz_final_medium_en);
+                    setMtimeleftminutes(480000);
+                    START_TIME_IN_MILLIS = 480000;
+                    break;
+                case "medium":
+                    eggzTitle.setImageResource(R.drawable.ic_text_medium);
+                    eggzFinal.setImageResource(R.drawable.ic_eggz_final_medium);
+                    setLanguage(eggzTitle, eggzFinal, R.drawable.ic_text_medium_en, R.drawable.ic_eggz_final_medium_en);
 
-                setMtimeleftminutes ( 300000 );
-                START_TIME_IN_MILLIS = 300000;
-            } else if (extras.getString ( "eggzType" ).equals ( "soft" )) {
-                eggzTitle.setImageResource ( R.drawable.ic_text_soft );
-                eggzFinal.setImageResource ( R.drawable.ic_eggz_final_soft );
-                setLanguage(eggzTitle,eggzFinal,R.drawable.ic_text_soft_en,R.drawable.ic_eggz_final_soft_en);
+                    setMtimeleftminutes(300000);
+                    START_TIME_IN_MILLIS = 300000;
+                    break;
+                case "soft":
+                    eggzTitle.setImageResource(R.drawable.ic_text_soft);
+                    eggzFinal.setImageResource(R.drawable.ic_eggz_final_soft);
+                    setLanguage(eggzTitle, eggzFinal, R.drawable.ic_text_soft_en, R.drawable.ic_eggz_final_soft_en);
 
 
-                setMtimeleftminutes ( 180000 );
-                START_TIME_IN_MILLIS = 180000;
+                    setMtimeleftminutes(180000);
+                    START_TIME_IN_MILLIS = 180000;
+                    break;
             }
 
         } else {
@@ -279,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void setEnLanguage() {
-        if (sharedPreferences.getString ( "languague", null ).equals ( "EN" )) {
+        if (sharedPreferences.getString ( initString.getLanguage(), null ).equals ( "EN" )) {
             finishButton.setBackgroundResource ( R.drawable.ic_button_done_en );
             resetButton.setBackgroundResource ( R.drawable.ic_button_reset_en );
             startButton.setBackgroundResource ( R.drawable.button_start_selector_en );
@@ -308,7 +319,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     void setLanguage(ImageView imageViewTitle,ImageView imageViewFinal, int t,int f){
-        if (sharedPreferences.getString ( "languague", null ).equals ( "EN" )) {
+        if (sharedPreferences.getString ( initString.getLanguage(), null ).equals ( "EN" )) {
             imageViewTitle.setImageResource(t);
             imageViewFinal.setImageResource(f);
         }
