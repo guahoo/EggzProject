@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void stateSettings() {
         Intent intent = getIntent ();
-        if (intent.hasExtra ( initString.getEggsType() )) {
+        if (intent.hasExtra ( "eggsType" )) {
             Bundle extras = getIntent ().getExtras ();
             assert extras != null;
             switch (Objects.requireNonNull(extras.getString(initString.getEggsType()))) {
@@ -244,6 +244,7 @@ public class MainActivity extends AppCompatActivity {
                     setMtimeleftminutes(300000);
                     START_TIME_IN_MILLIS = 300000;
                     break;
+
                 case "soft":
                     eggzTitle.setImageResource(R.drawable.ic_text_soft);
                     eggzFinal.setImageResource(R.drawable.ic_eggz_final_soft);

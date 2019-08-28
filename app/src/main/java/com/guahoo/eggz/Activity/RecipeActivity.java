@@ -1,4 +1,4 @@
-package com.guahoo.eggz.Utility;
+package com.guahoo.eggz.Activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -26,7 +26,6 @@ import java.util.Objects;
 public class RecipeActivity extends AppCompatActivity {
 
     SimplePagerAdapter simplePagerAdapter;
-    ResourcesModel resourcesModel;
     Button finishButton;
     private  final String TAG = "";
     Button crossButton;
@@ -127,6 +126,12 @@ public class RecipeActivity extends AppCompatActivity {
             }
         }
 
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this,StartActivity.class);
+        startActivity(intent);
     }
 
 

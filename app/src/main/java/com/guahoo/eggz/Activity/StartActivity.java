@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.NumberPicker;
 
 import com.guahoo.eggz.Utility.Dialog_menu;
+import com.guahoo.eggz.Utility.InitString;
 import com.guahoo.eggz.Utility.PlaySound;
 import com.guahoo.eggz.R;
 import com.guahoo.eggz.Utility.SoundPoolHelper;
@@ -43,6 +44,7 @@ public class StartActivity extends AppCompatActivity implements NumberPicker.OnV
     SharedPreferences sharedPreferences;
     SoundPoolHelper mSoundPoolHelper;
     int mSoundLessId;
+    InitString initString;
 
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -76,7 +78,9 @@ public class StartActivity extends AppCompatActivity implements NumberPicker.OnV
         sharedPreferences = getApplicationContext ().getSharedPreferences ( "soundOff", MODE_PRIVATE );
         mSoundPoolHelper = new SoundPoolHelper(1, this);
         mSoundLessId = mSoundPoolHelper.load(this, R.raw.click, 1);
+        initString = new InitString();
         setEnLanguage ();
+
 
 
         menuButton.setOnClickListener ( new View.OnClickListener () {
@@ -191,7 +195,7 @@ public class StartActivity extends AppCompatActivity implements NumberPicker.OnV
 
     protected void startMainActivity(String eggzType) {
         Intent intent = new Intent ( this, MainActivity.class );
-        intent.putExtra ( "eggzType", eggzType );
+        intent.putExtra ( initString.getEggsType(), eggzType );
         startActivity ( intent );
 
     }
