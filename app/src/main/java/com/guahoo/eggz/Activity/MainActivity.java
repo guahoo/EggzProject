@@ -81,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
         stateSettings ();
         setEnLanguage ();
 
@@ -214,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setMtimeleftminutes(long mtimeleftminutes) {
         this.mtimeleftminutes = mtimeleftminutes;
+        START_TIME_IN_MILLIS = mtimeleftminutes;
     }
 
 
@@ -224,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void stateSettings() {
         Intent intent = getIntent ();
-        if (intent.hasExtra ( "eggsType" )) {
+        if (intent.hasExtra ( initString.getEggsType() )) {
             Bundle extras = getIntent ().getExtras ();
             assert extras != null;
             switch (Objects.requireNonNull(extras.getString(initString.getEggsType()))) {
@@ -234,7 +237,6 @@ public class MainActivity extends AppCompatActivity {
                     setLanguage(eggzTitle, eggzFinal, R.drawable.ic_text_hard_en, R.drawable.ic_eggz_final_hard_en);
 
                     setMtimeleftminutes(480000);
-                    START_TIME_IN_MILLIS = 480000;
                     break;
                 case "medium":
                     eggzTitle.setImageResource(R.drawable.ic_text_medium);
@@ -242,7 +244,6 @@ public class MainActivity extends AppCompatActivity {
                     setLanguage(eggzTitle, eggzFinal, R.drawable.ic_text_medium_en, R.drawable.ic_eggz_final_medium_en);
 
                     setMtimeleftminutes(300000);
-                    START_TIME_IN_MILLIS = 300000;
                     break;
 
                 case "soft":
@@ -252,7 +253,6 @@ public class MainActivity extends AppCompatActivity {
 
 
                     setMtimeleftminutes(180000);
-                    START_TIME_IN_MILLIS = 180000;
                     break;
             }
 
@@ -268,7 +268,6 @@ public class MainActivity extends AppCompatActivity {
                 customeggzBoilTime = 1;
             }
             setMtimeleftminutes ( customeggzBoilTime );
-            START_TIME_IN_MILLIS = customeggzBoilTime;
 
             if (customeggzBoilTime < 300000) {
                 eggzTitle.setImageResource ( R.drawable.ic_text_soft );
