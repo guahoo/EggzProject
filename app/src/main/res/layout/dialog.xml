@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -15,7 +16,8 @@
         android:layout_alignStart="@+id/group_timer"
         android:layout_alignBottom="@+id/group_timer"
         android:layout_alignParentStart="true"
-        app:srcCompat="@drawable/ic_custom_timer_backround" />
+        app:srcCompat="@drawable/ic_custom_timer_backround"
+        tools:ignore="VectorDrawableCompat" />
 
     <LinearLayout
         android:id="@+id/group_timer"
@@ -42,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text=" : "
+                android:text="@string/dots"
                 android:textStyle="bold" />
 
             <NumberPicker

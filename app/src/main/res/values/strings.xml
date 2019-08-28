@@ -2,4 +2,5 @@
     <string name="app_name">Eggz</string>
     <string name="eggsType">eggsType</string>
     <string name="language">languague</string>
+    <string name="dots">:</string>
 </resources>

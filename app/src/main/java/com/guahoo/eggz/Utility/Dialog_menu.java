@@ -135,7 +135,7 @@ public  class Dialog_menu {
                     languague_menu_is_active = true;
                 }
 
-                else if (languague_menu_is_active){
+                else {
                     buttonsoundOff.setVisibility ( View.VISIBLE );
                     buttonsoundOn.setVisibility ( View.VISIBLE);
                     yellow_Langugue_Background.setVisibility ( View.INVISIBLE );

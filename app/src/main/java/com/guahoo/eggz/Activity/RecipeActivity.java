@@ -27,7 +27,7 @@ public class RecipeActivity extends AppCompatActivity {
 
     SimplePagerAdapter simplePagerAdapter;
     Button finishButton;
-    private  final String TAG = "";
+    final String TAG = "";
     Button crossButton;
     SharedPreferences sharedPreferences;
 
@@ -85,7 +85,7 @@ public class RecipeActivity extends AppCompatActivity {
         } );
 
 
-        ViewPager pager = (ViewPager) findViewById ( R.id.vpager );
+        ViewPager pager =  findViewById ( R.id.vpager );
         if (pager != null) {
             pager.setAdapter ( new SimplePagerAdapter ( this ) );
         }
