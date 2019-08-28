@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView yellowCircle, timerView;
     SharedPreferences sharedPreferences;
     InitString initString;
+    String PREFERENCES;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -74,8 +75,9 @@ public class MainActivity extends AppCompatActivity {
         timerView = findViewById ( R.id.timerView );
 
         vibrator = (Vibrator) getSystemService ( Context.VIBRATOR_SERVICE );
-        sharedPreferences = getApplicationContext ().getSharedPreferences ( "soundOff", MODE_PRIVATE );
         initString = new InitString();
+        sharedPreferences = getApplicationContext ().getSharedPreferences (PREFERENCES, MODE_PRIVATE );
+
 
 
 

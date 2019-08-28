@@ -4,8 +4,14 @@ public class InitString {
     public InitString(){
 
     }
-    String eggsType = "eggsType";
-    String language = "languague";
+    private String eggsType = "eggsType";
+    private String language = "languague";
+
+    public String getSoundOff() {
+        return soundOff;
+    }
+
+    private String soundOff = "soundOff";
 
     public String getEggsType() {
         return eggsType;

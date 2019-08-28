@@ -39,7 +39,7 @@ public  class Dialog_menu {
     Button languague_Button;
 
 
-    SharedPreferences PREFERENSES;
+    String PREFERENCES;
 
     public Dialog_menu(Button buttonsoundOn, Button buttonsoundOff,
                        Button languague_Button, Button russian_Languegue_Button, Button english_Languegue_Button,
@@ -91,7 +91,7 @@ public  class Dialog_menu {
         menuTitle = d.findViewById ( R.id.menu_title );
         recipeButton = d.findViewById ( R.id.resipes_button );
         languague_menu_is_active=false;
-        sharedPreferences = context.getSharedPreferences ( "soundOff",MODE_PRIVATE );
+        sharedPreferences = context.getSharedPreferences ( PREFERENCES,MODE_PRIVATE );
         final SharedPreferences.Editor editor = sharedPreferences.edit ();
 
         if (sharedPreferences.getString ( "soundOff",null )==null){

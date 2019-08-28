@@ -45,6 +45,7 @@ public class StartActivity extends AppCompatActivity implements NumberPicker.OnV
     SoundPoolHelper mSoundPoolHelper;
     int mSoundLessId;
     InitString initString;
+    String PREFERENCES;
 
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -75,7 +76,7 @@ public class StartActivity extends AppCompatActivity implements NumberPicker.OnV
         russian_Languegue_Button = findViewById ( R.id.russian_button );
         english_Languegue_Button = findViewById ( R.id.english_button );
         languague_menu_is_active = false;
-        sharedPreferences = getApplicationContext ().getSharedPreferences ( "soundOff", MODE_PRIVATE );
+        sharedPreferences = getApplicationContext ().getSharedPreferences ( PREFERENCES, MODE_PRIVATE );
         mSoundPoolHelper = new SoundPoolHelper(1, this);
         mSoundLessId = mSoundPoolHelper.load(this, R.raw.click, 1);
         initString = new InitString();
@@ -90,7 +91,6 @@ public class StartActivity extends AppCompatActivity implements NumberPicker.OnV
                 Dialog_menu dialog_menu = new Dialog_menu ( buttonsoundOn, buttonsoundOff,
                         languague_Button, russian_Languegue_Button, english_Languegue_Button,
                         yellow_Langugue_Background, sharedPreferences, languague_menu_is_active, StartActivity.this );
-                //showMenuDialog();
                 dialog_menu.showMenuDialog ();
             }
         } );
@@ -213,14 +213,7 @@ public class StartActivity extends AppCompatActivity implements NumberPicker.OnV
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    protected void playSound() {
-        if (Objects.equals ( sharedPreferences.getString ( "soundOff", null ), "on" )) {
-            final MediaPlayer mp = MediaPlayer.create ( this, R.raw.click );
-            mp.start ();
 
-        }
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void setEnLanguage() {
