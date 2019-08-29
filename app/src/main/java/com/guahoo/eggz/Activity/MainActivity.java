@@ -78,13 +78,6 @@ public class MainActivity extends AppCompatActivity {
         initString = new InitString();
         sharedPreferences = getApplicationContext ().getSharedPreferences (PREFERENCES, MODE_PRIVATE );
 
-
-
-
-
-
-
-
         stateSettings ();
         setEnLanguage ();
 
