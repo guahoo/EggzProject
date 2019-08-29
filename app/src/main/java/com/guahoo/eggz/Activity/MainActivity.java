@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     Button finishButton;
     Vibrator vibrator;
     NotificationTimerBar notificationTimerBar;
+    NotificationManager notificationManager;
 
     Button startButton;
     Button resetButton;
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         setRequestedOrientation ( ActivityInfo.SCREEN_ORIENTATION_LOCKED );
         requestWindowFeature ( Window.FEATURE_NO_TITLE );
-        getWindow ().setFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN );
+   //     getWindow ().setFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN );
         if (getSupportActionBar () != null) {
             getSupportActionBar ().setDisplayShowTitleEnabled ( false );
             getSupportActionBar ().hide ();
@@ -100,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
         resetButton.setEnabled ( false );
         updateTimeView ();
         notificationTimerBar.updateNotification();
+        notificationManager =
+                (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
 
 
@@ -168,17 +171,12 @@ public class MainActivity extends AppCompatActivity {
                 mProgress.setProgress ( (int) millisUntilFinished );
                 updateTimeView ();
                 notificationTimerBar.updateNotification();
-
-
-
             }
 
 
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onFinish() {
-
-
                 timeView.setVisibility ( View.INVISIBLE );
                 mProgress.setVisibility ( View.INVISIBLE );
                 resetButton.setVisibility ( View.INVISIBLE );
@@ -193,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
                 PlaySound playSound = new PlaySound ();
                 playSound.playSound ( sharedPreferences, getApplicationContext (), R.raw.final_sound );
                 timer.cancel ();
+                notificationManager.cancelAll();
             }
         }.start ();
 

@@ -18,15 +18,11 @@ public class SimplePagerAdapter extends PagerAdapter {
 
     private Context mContext;
 
-    SharedPreferences sharedPreferences;
+    private String PREFERENCES;
 
 
     public SimplePagerAdapter(Context context) {
         mContext = context;
-    }
-
-    public Context getmContext() {
-        return mContext;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -34,7 +30,7 @@ public class SimplePagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup viewGroup, int position) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
 
-        sharedPreferences = mContext.getSharedPreferences("soundOff", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(PREFERENCES, MODE_PRIVATE);
         if (Objects.equals(sharedPreferences.getString("languague", null), "EN")) {
             ResourcesModel_en resources = ResourcesModel_en.values()[position];
             ViewGroup layout = (ViewGroup) inflater.inflate(

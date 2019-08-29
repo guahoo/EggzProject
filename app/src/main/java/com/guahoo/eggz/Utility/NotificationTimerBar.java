@@ -71,5 +71,8 @@ public class NotificationTimerBar {
         channel.setDescription ( "Channel description" );
         notificationManager.createNotificationChannel ( channel );
     }
+    public void hideNotification(){
+
+    }
 
 }
