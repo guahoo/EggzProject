@@ -1,5 +1,9 @@
 package com.guahoo.eggz.Activity;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,11 +23,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.guahoo.eggz.Utility.InitString;
+import com.guahoo.eggz.Utility.NotificationTimerBar;
 import com.guahoo.eggz.Utility.PlaySound;
 import com.guahoo.eggz.R;
 
 import java.util.Locale;
 import java.util.Objects;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,19 +37,26 @@ public class MainActivity extends AppCompatActivity {
     TextView timeView;
     private CountDownTimer timer;
     boolean mTimerRunning;
-    private long START_TIME_IN_MILLIS;
+    public long START_TIME_IN_MILLIS;
+
+
+
+    public static long mtimeleftminutes;
     ProgressBar mProgress;
     Button crossButton;
     ImageView eggzFinal;
     Button finishButton;
     Vibrator vibrator;
-    long mtimeleftminutes;
+    NotificationTimerBar notificationTimerBar;
+
     Button startButton;
     Button resetButton;
     ImageView yellowCircle, timerView;
     SharedPreferences sharedPreferences;
     InitString initString;
     String PREFERENCES;
+    String NOTIF_CHANNEL_ID;
+
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -76,8 +89,8 @@ public class MainActivity extends AppCompatActivity {
 
         vibrator = (Vibrator) getSystemService ( Context.VIBRATOR_SERVICE );
         initString = new InitString();
+        notificationTimerBar=new NotificationTimerBar(this);
         sharedPreferences = getApplicationContext ().getSharedPreferences (PREFERENCES, MODE_PRIVATE );
-
         stateSettings ();
         setEnLanguage ();
 
@@ -86,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
         mProgress.setProgress ( (int) START_TIME_IN_MILLIS );
         resetButton.setEnabled ( false );
         updateTimeView ();
+        notificationTimerBar.updateNotification();
+
+
 
         finishButton.setOnClickListener ( new View.OnClickListener () {
             @Override
@@ -141,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
         String timeLeftFormatted = String.format ( Locale.getDefault (), "%02d:%02d", minutes, seconds );
         timeView.setText ( timeLeftFormatted );
 
+
     }
 
     protected void startTimer() {
@@ -150,6 +167,8 @@ public class MainActivity extends AppCompatActivity {
                 mtimeleftminutes = millisUntilFinished;
                 mProgress.setProgress ( (int) millisUntilFinished );
                 updateTimeView ();
+                notificationTimerBar.updateNotification();
+
 
 
             }
@@ -210,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void setMtimeleftminutes(long mtimeleftminutes) {
-        this.mtimeleftminutes = mtimeleftminutes;
+        MainActivity.mtimeleftminutes = mtimeleftminutes;
         START_TIME_IN_MILLIS = mtimeleftminutes;
     }
 
