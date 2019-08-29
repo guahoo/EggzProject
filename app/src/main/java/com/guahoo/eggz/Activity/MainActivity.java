@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.guahoo.eggz.Utility.InitString;
+import com.guahoo.eggz.Utility.NotificationTimerBar;
 import com.guahoo.eggz.Utility.PlaySound;
 import com.guahoo.eggz.R;
 
@@ -31,19 +32,22 @@ public class MainActivity extends AppCompatActivity {
     TextView timeView;
     private CountDownTimer timer;
     boolean mTimerRunning;
-    private long START_TIME_IN_MILLIS;
+    public static long START_TIME_IN_MILLIS;
+    public static long mtimeleftminutes;
     ProgressBar mProgress;
     Button crossButton;
     ImageView eggzFinal;
     Button finishButton;
     Vibrator vibrator;
-    long mtimeleftminutes;
+    NotificationTimerBar notificationTimerBar;
+
     Button startButton;
     Button resetButton;
     ImageView yellowCircle, timerView;
     SharedPreferences sharedPreferences;
     InitString initString;
     String PREFERENCES;
+
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -76,7 +80,10 @@ public class MainActivity extends AppCompatActivity {
 
         vibrator = (Vibrator) getSystemService ( Context.VIBRATOR_SERVICE );
         initString = new InitString();
+        notificationTimerBar=new NotificationTimerBar(this);
         sharedPreferences = getApplicationContext ().getSharedPreferences (PREFERENCES, MODE_PRIVATE );
+
+
 
 
 
@@ -93,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
         mProgress.setProgress ( (int) START_TIME_IN_MILLIS );
         resetButton.setEnabled ( false );
         updateTimeView ();
+        notificationTimerBar.sendNotification();
+
+
 
         finishButton.setOnClickListener ( new View.OnClickListener () {
             @Override
@@ -147,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
         int seconds = (int) mtimeleftminutes / 1000 % 60;
         String timeLeftFormatted = String.format ( Locale.getDefault (), "%02d:%02d", minutes, seconds );
         timeView.setText ( timeLeftFormatted );
+        notificationTimerBar.updateNotification();
 
     }
 
