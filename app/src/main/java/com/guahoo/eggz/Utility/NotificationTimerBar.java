@@ -56,7 +56,7 @@ public class NotificationTimerBar {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void sendNotification(){
         Intent notificationIntent = new Intent ( context, MainActivity.class )
-                .addFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                .addFlags( Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP );
         PendingIntent pendingIntent = PendingIntent.getActivity ( context, 0,
                 notificationIntent, 0 );
 
@@ -67,12 +67,14 @@ public class NotificationTimerBar {
         builder
                 .setSmallIcon (R.drawable.ic_icon_round )
                 .setPriority (PRIORITY_HIGH )
-                .setOngoing ( true )
-                .setOnlyAlertOnce ( true )
+                .setOngoing ( false )
+                .setOnlyAlertOnce ( false )
                 .setDefaults( DEFAULT_ALL )
                 .setContentTitle ( timeLeftFormatted )
                 .setContentIntent( pendingIntent);
         notificationManager.notify ( 1,builder.build () );
+
+
 
     }
     public void updateNotification(){
@@ -83,5 +85,12 @@ public class NotificationTimerBar {
         notificationManager.notify(1, builder.build());
     }
 
+    public Thread updateProgressThread = new Thread(){
+        public void run(){
+            for (int i=0;i<10;i++){
+                builder.setProgress(10,i,false);
+            }
+        }
+    };
 
 }
