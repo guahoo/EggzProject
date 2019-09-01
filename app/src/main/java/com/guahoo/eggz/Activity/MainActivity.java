@@ -1,9 +1,6 @@
 package com.guahoo.eggz.Activity;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,17 +13,14 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
+import com.guahoo.eggz.R;
 import com.guahoo.eggz.Utility.InitString;
 import com.guahoo.eggz.Utility.NotificationTimerBar;
 import com.guahoo.eggz.Utility.PlaySound;
-import com.guahoo.eggz.R;
-
 import java.util.Locale;
 import java.util.Objects;
 
@@ -35,9 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
     ImageView eggzTitle;
     TextView timeView;
-    private CountDownTimer timer;
+    CountDownTimer timer;
     boolean mTimerRunning;
-    public long START_TIME_IN_MILLIS;
+    public static long START_TIME_IN_MILLIS;
 
 
 
@@ -65,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         setRequestedOrientation ( ActivityInfo.SCREEN_ORIENTATION_LOCKED );
         requestWindowFeature ( Window.FEATURE_NO_TITLE );
-   //     getWindow ().setFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN );
+
         if (getSupportActionBar () != null) {
             getSupportActionBar ().setDisplayShowTitleEnabled ( false );
             getSupportActionBar ().hide ();
@@ -100,7 +94,9 @@ public class MainActivity extends AppCompatActivity {
         mProgress.setProgress ( (int) START_TIME_IN_MILLIS );
         resetButton.setEnabled ( false );
         updateTimeView ();
-        notificationTimerBar.updateNotification();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            notificationTimerBar.updateNotification();
+        }
         notificationManager =
                 (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -165,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected void startTimer() {
         timer = new CountDownTimer ( mtimeleftminutes, 1000 ) {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onTick(long millisUntilFinished) {
                 mtimeleftminutes = millisUntilFinished;
@@ -216,6 +213,8 @@ public class MainActivity extends AppCompatActivity {
     private void resetTimer() {
         mtimeleftminutes = START_TIME_IN_MILLIS;
         updateTimeView ();
+        notificationTimerBar.resetProgress();
+        notificationTimerBar.updateNotification();
         startButton.setBackgroundResource ( R.drawable.buttonstartselector );
         if (Objects.equals(sharedPreferences.getString(initString.getLanguage(), null), "EN")) {
             startButton.setBackgroundResource ( R.drawable.button_start_selector_en );
@@ -343,10 +342,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        timer.cancel ();
+        if(mTimerRunning){
+            timer.cancel ();
+        }
+
         mTimerRunning = false;
         Intent intent = new Intent(this,StartActivity.class);
         startActivity(intent);
+        notificationTimerBar.hideNotification();
     }
 }
 
