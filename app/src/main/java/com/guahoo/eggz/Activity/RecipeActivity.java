@@ -30,6 +30,7 @@ public class RecipeActivity extends AppCompatActivity {
     final String TAG = "";
     Button crossButton;
     SharedPreferences sharedPreferences;
+    String PREFERENCES;
 
     public int getCurrentPage() {
         return currentPage;
@@ -43,14 +44,14 @@ public class RecipeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation ( ActivityInfo.SCREEN_ORIENTATION_LOCKED );
         requestWindowFeature ( Window.FEATURE_NO_TITLE );
-        getWindow ().setFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN );
+       // getWindow ().setFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN );
         if (getSupportActionBar () != null) {
             getSupportActionBar ().setDisplayShowTitleEnabled ( false );
             getSupportActionBar ().hide ();
         }
         super.onCreate ( savedInstanceState );
         setContentView ( R.layout.activity_recipe );
-        sharedPreferences = getApplicationContext().getSharedPreferences("soundOff", MODE_PRIVATE);
+        sharedPreferences = getApplicationContext().getSharedPreferences(PREFERENCES, MODE_PRIVATE);
 
 
         simplePagerAdapter = new SimplePagerAdapter ( this );

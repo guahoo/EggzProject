@@ -1,5 +1,7 @@
 package com.guahoo.eggz.Utility;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -18,79 +20,59 @@ import java.util.Objects;
 import static android.app.Notification.DEFAULT_ALL;
 import static android.content.Context.MODE_PRIVATE;
 import static android.support.v4.app.NotificationCompat.PRIORITY_HIGH;
+import static com.guahoo.eggz.Activity.MainActivity.mtimeleftminutes;
 
 
 public class NotificationTimerBar {
     NotificationManager notificationManager;
     NotificationCompat.Builder builder;
-    long mtimeleftminutes;
+//    long mtimeleftminutes;
     long START_TIME_IN_MILLIS;
     Context context;
     SharedPreferences sPrefs;
     InitString initString;
     String PREFERENCES;
     String timeLeftFormatted;
+    String NOTIF_CHANNEL_ID;
 
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public NotificationTimerBar(Context context) {
-        this.context=context;
-        initString = new InitString();
-        sPrefs = context.getSharedPreferences (PREFERENCES, MODE_PRIVATE );
-        String ns = Context.NOTIFICATION_SERVICE;
-        notificationManager = (NotificationManager) context.getSystemService(ns);
-        builder=new NotificationCompat.Builder ( context );
-        mtimeleftminutes = MainActivity.mtimeleftminutes;
-        int minutes = (int) mtimeleftminutes / 1000 / 60;
-        int seconds = (int) mtimeleftminutes / 1000 % 60;
-        timeLeftFormatted = String.format ( Locale.getDefault (), "%02d:%02d", minutes, seconds );
-        sendNotification();
-        updateNotification();
-
-
+        this.context = context;
     }
 
 
-
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void sendNotification(){
-        Intent notificationIntent = new Intent ( context, MainActivity.class )
-                .addFlags( Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP );
-        PendingIntent pendingIntent = PendingIntent.getActivity ( context, 0,
-                notificationIntent, 0 );
-
-
-
-
-
-        builder
-                .setSmallIcon (R.drawable.ic_icon_round )
-                .setPriority (PRIORITY_HIGH )
-                .setOngoing ( false )
-                .setOnlyAlertOnce ( false )
-                .setDefaults( DEFAULT_ALL )
-                .setContentTitle ( timeLeftFormatted )
-                .setContentIntent( pendingIntent);
-        notificationManager.notify ( 1,builder.build () );
-
-
-
+    public Notification getMyActivityNotification(String text){
+        PendingIntent contentIntent = PendingIntent.getActivity(context,
+                0, new Intent(context, MainActivity.class), 0);
+        return new Notification.Builder(context)
+                .setContentText(text)
+                .setSmallIcon(R.drawable.ic_icon_round)
+                .setOngoing ( true )
+                .setOnlyAlertOnce ( true )
+                .setContentIntent(contentIntent).getNotification();
     }
-    public void updateNotification(){
+
+    public void updateNotification() {
         int minutes = (int) mtimeleftminutes / 1000 / 60;
         int seconds = (int) mtimeleftminutes / 1000 % 60;
         String timeLeftFormatted = String.format ( Locale.getDefault (), "%02d:%02d", minutes, seconds );
-        builder.setContentTitle(timeLeftFormatted );
-        notificationManager.notify(1, builder.build());
+        String text = timeLeftFormatted;
+        Notification notification = getMyActivityNotification(text);
+        NotificationManager mNotificationManager = (NotificationManager)
+                context.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(1, notification);
     }
 
-    public Thread updateProgressThread = new Thread(){
-        public void run(){
-            for (int i=0;i<10;i++){
-                builder.setProgress(10,i,false);
-            }
+    public void initChannels(Context context) {
+        if (Build.VERSION.SDK_INT < 26) {
+            return;
         }
-    };
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService ( Context.NOTIFICATION_SERVICE );
+        NotificationChannel channel = new NotificationChannel( "1", NOTIF_CHANNEL_ID, NotificationManager.IMPORTANCE_DEFAULT );
+        channel.setDescription ( "Channel description" );
+        notificationManager.createNotificationChannel ( channel );
+    }
+    public void hideNotification(){
+
+    }
 
 }

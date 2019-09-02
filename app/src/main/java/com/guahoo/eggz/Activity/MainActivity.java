@@ -1,5 +1,9 @@
 package com.guahoo.eggz.Activity;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,13 +30,17 @@ import com.guahoo.eggz.R;
 import java.util.Locale;
 import java.util.Objects;
 
+
 public class MainActivity extends AppCompatActivity {
 
     ImageView eggzTitle;
     TextView timeView;
     private CountDownTimer timer;
     boolean mTimerRunning;
-    public static long START_TIME_IN_MILLIS;
+    public long START_TIME_IN_MILLIS;
+
+
+
     public static long mtimeleftminutes;
     ProgressBar mProgress;
     Button crossButton;
@@ -40,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     Button finishButton;
     Vibrator vibrator;
     NotificationTimerBar notificationTimerBar;
+    NotificationManager notificationManager;
 
     Button startButton;
     Button resetButton;
@@ -47,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     InitString initString;
     String PREFERENCES;
+    String NOTIF_CHANNEL_ID;
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -55,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         setRequestedOrientation ( ActivityInfo.SCREEN_ORIENTATION_LOCKED );
         requestWindowFeature ( Window.FEATURE_NO_TITLE );
-        getWindow ().setFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN );
+   //     getWindow ().setFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN );
         if (getSupportActionBar () != null) {
             getSupportActionBar ().setDisplayShowTitleEnabled ( false );
             getSupportActionBar ().hide ();
@@ -82,16 +92,6 @@ public class MainActivity extends AppCompatActivity {
         initString = new InitString();
         notificationTimerBar=new NotificationTimerBar(this);
         sharedPreferences = getApplicationContext ().getSharedPreferences (PREFERENCES, MODE_PRIVATE );
-
-
-
-
-
-
-
-
-
-
         stateSettings ();
         setEnLanguage ();
 
@@ -100,7 +100,9 @@ public class MainActivity extends AppCompatActivity {
         mProgress.setProgress ( (int) START_TIME_IN_MILLIS );
         resetButton.setEnabled ( false );
         updateTimeView ();
-        notificationTimerBar.sendNotification();
+        notificationTimerBar.updateNotification();
+        notificationManager =
+                (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
 
 
@@ -157,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         int seconds = (int) mtimeleftminutes / 1000 % 60;
         String timeLeftFormatted = String.format ( Locale.getDefault (), "%02d:%02d", minutes, seconds );
         timeView.setText ( timeLeftFormatted );
-        notificationTimerBar.updateNotification();
+
 
     }
 
@@ -168,16 +170,13 @@ public class MainActivity extends AppCompatActivity {
                 mtimeleftminutes = millisUntilFinished;
                 mProgress.setProgress ( (int) millisUntilFinished );
                 updateTimeView ();
-
-
+                notificationTimerBar.updateNotification();
             }
 
 
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onFinish() {
-
-
                 timeView.setVisibility ( View.INVISIBLE );
                 mProgress.setVisibility ( View.INVISIBLE );
                 resetButton.setVisibility ( View.INVISIBLE );
@@ -192,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
                 PlaySound playSound = new PlaySound ();
                 playSound.playSound ( sharedPreferences, getApplicationContext (), R.raw.final_sound );
                 timer.cancel ();
+                notificationManager.cancelAll();
             }
         }.start ();
 
@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void setMtimeleftminutes(long mtimeleftminutes) {
-        this.mtimeleftminutes = mtimeleftminutes;
+        MainActivity.mtimeleftminutes = mtimeleftminutes;
         START_TIME_IN_MILLIS = mtimeleftminutes;
     }
 

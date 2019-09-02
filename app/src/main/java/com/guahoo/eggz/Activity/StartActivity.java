@@ -53,7 +53,7 @@ public class StartActivity extends AppCompatActivity implements NumberPicker.OnV
     protected void onCreate(final Bundle savedInstanceState) {
         setRequestedOrientation ( ActivityInfo.SCREEN_ORIENTATION_LOCKED );
         requestWindowFeature ( Window.FEATURE_NO_TITLE );
-        getWindow ().setFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN );
+     //   getWindow ().setFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN );
         if (getSupportActionBar () != null) {
             getSupportActionBar ().setDisplayShowTitleEnabled ( false );
             getSupportActionBar ().hide ();
