@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.ColorDrawable;
-import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -14,15 +13,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 
+import com.guahoo.eggz.R;
 import com.guahoo.eggz.Utility.Dialog_menu;
 import com.guahoo.eggz.Utility.InitString;
-import com.guahoo.eggz.Utility.PlaySound;
-import com.guahoo.eggz.R;
 import com.guahoo.eggz.Utility.SoundPoolHelper;
 
 import java.util.Objects;
@@ -53,7 +50,6 @@ public class StartActivity extends AppCompatActivity implements NumberPicker.OnV
     protected void onCreate(final Bundle savedInstanceState) {
         setRequestedOrientation ( ActivityInfo.SCREEN_ORIENTATION_LOCKED );
         requestWindowFeature ( Window.FEATURE_NO_TITLE );
-     //   getWindow ().setFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN );
         if (getSupportActionBar () != null) {
             getSupportActionBar ().setDisplayShowTitleEnabled ( false );
             getSupportActionBar ().hide ();
@@ -223,7 +219,8 @@ public class StartActivity extends AppCompatActivity implements NumberPicker.OnV
             editor.putString("soundOff","on");
             editor.apply();
         }
-        if (Objects.equals(sharedPreferences.getString("languague", null), "EN")) {
+
+        if ("EN".equals(sharedPreferences.getString("languague", null))) {
             button_custom_picker_show.setBackgroundResource ( R.drawable.ic_button_custom_timer_picker_show_en );
             softEggzButton.setBackgroundResource ( R.drawable.ic_button_soft_en );
             hardEgggzButton.setBackgroundResource ( R.drawable.ic_button_hard_en );
