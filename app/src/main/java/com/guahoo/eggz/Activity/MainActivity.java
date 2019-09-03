@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         finishButton.setOnClickListener ( new View.OnClickListener () {
             @Override
             public void onClick(View v) {
+                notificationManager.cancelAll();
                 Intent intent = new Intent ( getApplicationContext (), StartActivity.class );
                 vibrator.cancel ();
                 startActivity ( intent );
@@ -188,7 +189,8 @@ public class MainActivity extends AppCompatActivity {
                 PlaySound playSound = new PlaySound ();
                 playSound.playSound ( sharedPreferences, getApplicationContext (), R.raw.final_sound );
                 timer.cancel ();
-                notificationManager.cancelAll();
+                notificationTimerBar.maxProgress();
+
             }
         }.start ();
 
@@ -238,9 +240,9 @@ public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void stateSettings() {
-        Intent intent = getIntent ();
-        if (intent.hasExtra ( initString.getEggsType() )) {
-            Bundle extras = getIntent ().getExtras ();
+        Intent intent = getIntent();
+        if (intent.hasExtra(initString.getEggsType())) {
+            Bundle extras = getIntent().getExtras();
             assert extras != null;
             switch (Objects.requireNonNull(extras.getString(initString.getEggsType()))) {
                 case "hard":
@@ -269,34 +271,36 @@ public class MainActivity extends AppCompatActivity {
             }
 
         } else {
-            Bundle extras = getIntent ().getExtras ();
-            assert extras != null;
+            if (intent.hasExtra("eggzBoilMinutes")) {
+
+                Bundle extras = getIntent().getExtras();
+                assert extras != null;
 
 
-            int customeggzBoilTime = ( extras.getInt ( "eggzBoilMinutes" ) * 1000 * 60 ) +
-                    ( extras.getInt ( "eggzBoilSeconds" ) * 1000 );
+                int customeggzBoilTime = (extras.getInt("eggzBoilMinutes") * 1000 * 60) +
+                        (extras.getInt("eggzBoilSeconds") * 1000);
 
-            if (customeggzBoilTime < 1) {
-                customeggzBoilTime = 1;
-            }
-            setMtimeleftminutes ( customeggzBoilTime );
+                if (customeggzBoilTime < 1) {
+                    customeggzBoilTime = 1;
+                }
+                setMtimeleftminutes(customeggzBoilTime);
 
-            if (customeggzBoilTime < 300000) {
-                eggzTitle.setImageResource ( R.drawable.ic_text_soft );
-                eggzFinal.setImageResource ( R.drawable.ic_eggz_final_soft );
-                setLanguage(eggzTitle,eggzFinal,R.drawable.ic_text_soft_en,R.drawable.ic_eggz_final_soft_en);
-            } else if (customeggzBoilTime >= 300000 & customeggzBoilTime < 480000) {
+                if (customeggzBoilTime < 300000) {
+                    eggzTitle.setImageResource(R.drawable.ic_text_soft);
+                    eggzFinal.setImageResource(R.drawable.ic_eggz_final_soft);
+                    setLanguage(eggzTitle, eggzFinal, R.drawable.ic_text_soft_en, R.drawable.ic_eggz_final_soft_en);
+                } else if (customeggzBoilTime >= 300000 & customeggzBoilTime < 480000) {
 
-                eggzTitle.setImageResource ( R.drawable.ic_text_medium );
-                eggzFinal.setImageResource ( R.drawable.ic_eggz_final_medium );
-                setLanguage(eggzTitle,eggzFinal,R.drawable.ic_text_medium_en,R.drawable.ic_eggz_final_medium_en);
-            } else if (customeggzBoilTime >= 480000) {
+                    eggzTitle.setImageResource(R.drawable.ic_text_medium);
+                    eggzFinal.setImageResource(R.drawable.ic_eggz_final_medium);
+                    setLanguage(eggzTitle, eggzFinal, R.drawable.ic_text_medium_en, R.drawable.ic_eggz_final_medium_en);
+                } else if (customeggzBoilTime >= 480000) {
 
 
-
-                eggzTitle.setImageResource ( R.drawable.ic_text_hard );
-                eggzFinal.setImageResource ( R.drawable.ic_eggz_final_hard );
-                setLanguage(eggzTitle,eggzFinal,R.drawable.ic_text_hard_en,R.drawable.ic_eggz_final_hard_en);
+                    eggzTitle.setImageResource(R.drawable.ic_text_hard);
+                    eggzFinal.setImageResource(R.drawable.ic_eggz_final_hard);
+                    setLanguage(eggzTitle, eggzFinal, R.drawable.ic_text_hard_en, R.drawable.ic_eggz_final_hard_en);
+                }
             }
         }
     }
@@ -350,6 +354,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,StartActivity.class);
         startActivity(intent);
         notificationTimerBar.hideNotification();
+    }
+    public void onStart(){
+        super.onStart();
+
+
     }
 }
 
