@@ -34,6 +34,7 @@ public class NotificationTimerBar {
         initChannels(context);
 
 
+
     }
 
 
@@ -56,7 +57,7 @@ public class NotificationTimerBar {
     public void updateNotification() {
         Notification notification = null;
 
-            notification = getMyActivityNotification();
+        notification = getMyActivityNotification();
 
         NotificationManager mNotificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -64,9 +65,12 @@ public class NotificationTimerBar {
         if (mNotificationManager != null) {
             mNotificationManager.notify(1, notification);
         }
-        remoteViews.setTextViewText(R.id.timeView_notificationBar,timeLeftFormatted());
         progress= (int)( START_TIME_IN_MILLIS-mtimeleftminutes);
+        remoteViews.setTextViewText(R.id.timeView_notificationBar,timeLeftFormatted());
         remoteViews.setProgressBar(R.id.progressBar,(int)START_TIME_IN_MILLIS,progress,false);
+
+
+
 
 
     }
@@ -95,8 +99,24 @@ public class NotificationTimerBar {
         remoteViews.setProgressBar(R.id.progressBar,(int)START_TIME_IN_MILLIS,0,false);
     }
     public void maxProgress(){
+        remoteViews.setTextViewText(R.id.timeView_notificationBar,"Bon Appetit!");
         remoteViews.setProgressBar(R.id.progressBar,100,100,false);
 
+    }
+
+    public void updateNotification(int progress) {
+        Notification notification = null;
+
+        notification = getMyActivityNotification();
+
+        NotificationManager mNotificationManager = (NotificationManager)
+                context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (mNotificationManager != null) {
+            mNotificationManager.notify(1, notification);
+        }
+
+        remoteViews.setProgressBar(R.id.progressBar,100,progress,false);
     }
 
 }
