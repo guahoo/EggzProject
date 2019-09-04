@@ -189,8 +189,11 @@ public class MainActivity extends AppCompatActivity {
                 vibrator.vibrate ( 1000 );
                 PlaySound playSound = new PlaySound ();
                 playSound.playSound ( sharedPreferences, getApplicationContext (), R.raw.final_sound );
-                timer.cancel ();
+             //   notificationTimerBar.resetProgress();
                 notificationTimerBar.maxProgress();
+                notificationTimerBar.updateNotification();
+                timer.cancel ();
+
 
             }
         }.start ();
@@ -356,10 +359,15 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         notificationTimerBar.hideNotification();
     }
-    public void onStart(){
-        super.onStart();
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mTimerRunning){
+            timer.cancel ();
+        }
+        notificationTimerBar.hideNotification();
     }
+
 }
 
