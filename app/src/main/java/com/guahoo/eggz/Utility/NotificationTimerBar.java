@@ -79,7 +79,6 @@ public class NotificationTimerBar {
         mNotificationManager.notify(1, notification);
         remoteViews.setTextViewText(R.id.timeView_notificationBar,timeLeftFormatted());
         progress= (int)( START_TIME_IN_MILLIS-mtimeleftminutes);
-
         remoteViews.setProgressBar(R.id.progressBar,(int)START_TIME_IN_MILLIS,progress,false);
 
 
