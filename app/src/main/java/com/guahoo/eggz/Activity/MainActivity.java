@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     InitString initString;
     String PREFERENCES;
-    String NOTIF_CHANNEL_ID;
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -88,13 +88,14 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getApplicationContext ().getSharedPreferences (PREFERENCES, MODE_PRIVATE );
         stateSettings ();
         setEnLanguage ();
-        notificationTimerBar.initChannels(this);
+        notificationTimerBar.createNotificationChannel();
 
 
         mProgress.setMax ( (int) START_TIME_IN_MILLIS );
         mProgress.setProgress ( (int) START_TIME_IN_MILLIS );
         resetButton.setEnabled ( false );
         updateTimeView ();
+        notificationTimerBar.updateNotification();
 
         notificationTimerBar.updateNotification();
 
@@ -120,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 if (mTimerRunning) {
                     timer.cancel ();
                 }
+                notificationTimerBar.hideNotification();
                 Intent intent = new Intent ( getApplicationContext (), StartActivity.class );
                 startActivity ( intent );
             }

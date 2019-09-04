@@ -21,7 +21,7 @@ import static com.guahoo.eggz.Activity.MainActivity.mtimeleftminutes;
 public class NotificationTimerBar {
 
     Context context;
-    String NOTIF_CHANNEL_ID;
+    String NOTIF_CHANNEL_ID="1";
     RemoteViews remoteViews;
     private PendingIntent contentIntent;
     int progress;
@@ -42,13 +42,25 @@ public class NotificationTimerBar {
     public Notification getMyActivityNotification(){
         PendingIntent contentIntent = PendingIntent.getActivity(context,
                 0, new Intent(context, MainActivity.class), 0);
-        remoteViews.setTextViewText(R.id.timeView_notificationBar,timeLeftFormatted());
 
-        return new Notification.Builder(context)
-                .setSmallIcon(R.drawable.ic_icon_round)
-                .setContent(remoteViews)
-                .setOngoing(true)
-                .setContentIntent(contentIntent).getNotification();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return new Notification.Builder(context)
+                    .setSmallIcon(R.drawable.ic_icon_round)
+                    .setContent(remoteViews)
+                    .setOngoing(true)
+                    .setChannelId(NOTIF_CHANNEL_ID)
+                    .setContentIntent(contentIntent).getNotification();
+
+        }else {
+
+            return new Notification.Builder(context)
+                    .setSmallIcon(R.drawable.ic_icon_round)
+                    .setContent(remoteViews)
+                    .setOngoing(true)
+                    .setContentIntent(contentIntent).getNotification();
+        }
+
+
 
 
     }
@@ -66,8 +78,8 @@ public class NotificationTimerBar {
             mNotificationManager.notify(1, notification);
         }
         progress= (int)( START_TIME_IN_MILLIS-mtimeleftminutes);
-        remoteViews.setTextViewText(R.id.timeView_notificationBar,timeLeftFormatted());
         remoteViews.setProgressBar(R.id.progressBar,(int)START_TIME_IN_MILLIS,progress,false);
+        remoteViews.setTextViewText(R.id.timeView_notificationBar,timeLeftFormatted());
 
 
 
@@ -75,15 +87,21 @@ public class NotificationTimerBar {
 
     }
 
-    public void initChannels(Context context) {
-        if (Build.VERSION.SDK_INT < 26) {
-            return;
+    public void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Eggz";
+            String description = "EggzNotificationChannel";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel(NOTIF_CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+            assert notificationManager != null;
+            notificationManager.createNotificationChannel(channel);
         }
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService ( Context.NOTIFICATION_SERVICE );
-        NotificationChannel channel = new NotificationChannel( "1", NOTIF_CHANNEL_ID, NotificationManager.IMPORTANCE_DEFAULT );
-        channel.setDescription ( "Channel description" );
-        assert notificationManager != null;
-        notificationManager.createNotificationChannel ( channel );
     }
     public void hideNotification(){
         notificationManager.cancelAll();
@@ -99,24 +117,10 @@ public class NotificationTimerBar {
         remoteViews.setProgressBar(R.id.progressBar,(int)START_TIME_IN_MILLIS,0,false);
     }
     public void maxProgress(){
-        remoteViews.setTextViewText(R.id.timeView_notificationBar,"Bon Appetit!");
+        remoteViews.setTextViewText(R.id.timeView_notificationBar,"Bon appetit!");
         remoteViews.setProgressBar(R.id.progressBar,100,100,false);
 
     }
 
-    public void updateNotification(int progress) {
-        Notification notification = null;
-
-        notification = getMyActivityNotification();
-
-        NotificationManager mNotificationManager = (NotificationManager)
-                context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        if (mNotificationManager != null) {
-            mNotificationManager.notify(1, notification);
-        }
-
-        remoteViews.setProgressBar(R.id.progressBar,100,progress,false);
-    }
 
 }

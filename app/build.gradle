@@ -6,7 +6,7 @@ android {
         applicationId "com.guahoo.eggz"
         minSdkVersion 18
         targetSdkVersion 28
-        versionCode 8
+        versionCode 9
         versionName "6.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
