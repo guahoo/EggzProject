@@ -31,7 +31,7 @@ public class NotificationTimerBar {
         this.context = context;
         remoteViews = new RemoteViews(context.getPackageName(),R.layout.notification_progress_bar);
         notificationManager = (NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        initChannels(context);
+
 
 
     }

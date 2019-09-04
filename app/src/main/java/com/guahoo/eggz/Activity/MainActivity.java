@@ -88,15 +88,16 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getApplicationContext ().getSharedPreferences (PREFERENCES, MODE_PRIVATE );
         stateSettings ();
         setEnLanguage ();
+        notificationTimerBar.initChannels(this);
 
 
         mProgress.setMax ( (int) START_TIME_IN_MILLIS );
         mProgress.setProgress ( (int) START_TIME_IN_MILLIS );
         resetButton.setEnabled ( false );
         updateTimeView ();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            notificationTimerBar.updateNotification();
-        }
+
+        notificationTimerBar.updateNotification();
+
         notificationManager =
                 (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
