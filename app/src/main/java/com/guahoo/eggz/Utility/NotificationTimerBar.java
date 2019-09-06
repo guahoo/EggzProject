@@ -96,6 +96,7 @@ public class NotificationTimerBar {
 
     }
     public void resetProgress(){
+        remoteViews.setTextViewText(R.id.timeView_notificationBar,timeLeftFormatted());
         remoteViews.setProgressBar(R.id.progressBar,(int)START_TIME_IN_MILLIS,0,false);
     }
     public void maxProgress(){
